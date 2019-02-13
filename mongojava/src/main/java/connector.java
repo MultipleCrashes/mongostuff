@@ -5,6 +5,13 @@ import com.mongodb.MongoCredential;
 import com.mongodb.MongoClient;
 import com.mongodb.*;
 import com.mongodb.MongoCredential;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.BasicDBObject;
+import com.mongodb.*;
+import java.lang.*;
+
+import java.awt.*;
 
 class Connector{
 
@@ -19,11 +26,28 @@ public static void main(String args[])
 		
 		System.out.println("Connected to the datase successfully");
 		// Accessing the database 
-		//MongoDatabase database = mongo.getDB("sampleDb");
-		//MongoDatabase database = mongo.getDB("harishDb");	
+		Connector obj = new Connector();
+		obj.bulkInsertion(mongo);
+		//obj.dbOperations(mongo);
+		//obj.insertRow(mongo);  // passing Db handler 
 	}
 	catch(Exception e) {
 		System.out.println("exception found while connecting to client");
 	}
 }
+
+
+public void bulkInsertion(MongoClient mongo) {
+	DB dbh = mongo.getDB("ndb");
+	DBCollection dbc = dbh.getCollection("collection1");
+	for(int x=1; x<100000; x++) {		
+		BasicDBObject document = new BasicDBObject();
+		document.put("fname", x);
+		dbc.insert(document);
+		System.out.println("Inserting element in db : " +x );
+	}
+
+}
+
+
 }
