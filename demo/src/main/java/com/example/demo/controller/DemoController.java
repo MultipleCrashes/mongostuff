@@ -13,6 +13,8 @@ public class DemoController {
    @ResponseBody
    @RequestMapping(method = GET, produces = "application/json")
    public String demo() {
-       return "{\"hello\":\"world\"}";
+	   return "{\"hey\":\"hey there\"}";
+	 
+     // return "{\"hello\":\"world\"}";
    }
 }
