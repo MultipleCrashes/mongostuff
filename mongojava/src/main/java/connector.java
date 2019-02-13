@@ -10,11 +10,11 @@ import com.mongodb.DBCollection;
 import com.mongodb.BasicDBObject;
 import com.mongodb.*;
 import java.lang.*;
+import com.mongodb.Cursor;
 
 import java.awt.*;
 
 class Connector{
-
 
 public static void main(String args[])
 {
@@ -28,6 +28,9 @@ public static void main(String args[])
 		// Accessing the database 
 		Connector obj = new Connector();
 		obj.bulkInsertion(mongo);
+		String dbName;
+		String collectionName;
+		obj.iterateCollection(mongo, dbName="ndb", collectionName="collection1");
 		//obj.dbOperations(mongo);
 		//obj.insertRow(mongo);  // passing Db handler 
 	}
@@ -46,8 +49,17 @@ public void bulkInsertion(MongoClient mongo) {
 		dbc.insert(document);
 		System.out.println("Inserting element in db : " +x );
 	}
-
+	
 }
 
-
+public void iterateCollection(MongoClient mongo, String dbName, String collectionName)
+{
+	DB dbh = mongo.getDB(dbName);
+	DBCollection dbc = dbh.getCollection(collectionName);
+	dbc.find();
+	DBCursor dbcur = dbc.find();
+	while(dbcur.hasNext()) {
+		System.out.println("Fetched value from db" + dbcur.next());
+	}
+}
 }
